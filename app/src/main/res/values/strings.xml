@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Новости Tinkoff</string>
+    <string name="network_error">Что то пошло не так</string>
+    <string name="nothing_update">Обновление не требуется</string>
+    <string name="title_activity_news_info">Информация о новости</string>
+    <string name="empty_content">У данной новости отсуствует контент</string>
+    <string name="db_errror">Ошибка при работе с базой данных</string>
+</resources>
