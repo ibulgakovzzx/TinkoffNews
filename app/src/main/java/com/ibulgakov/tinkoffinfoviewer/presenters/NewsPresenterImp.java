@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -24,11 +25,13 @@ public class NewsPresenterImp implements NewsPresenter {
 
     private NewsView newsView;
     private Realm realm;
+    private CompositeDisposable compositeDisposable;
 
     @Override
     public void attachToView(NewsView view) {
         newsView = view;
         realm = Realm.getDefaultInstance();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -36,6 +39,9 @@ public class NewsPresenterImp implements NewsPresenter {
         newsView = null;
         if(!realm.isClosed()){
             realm.close();
+        }
+        if(compositeDisposable != null && !compositeDisposable.isDisposed()){
+            compositeDisposable.dispose();
         }
     }
 
@@ -45,7 +51,7 @@ public class NewsPresenterImp implements NewsPresenter {
         if(!isRefreshing){
             newsView.changeProgressVisibility(true);
         }
-        RequestManager.getNews()
+        compositeDisposable.add(RequestManager.getNews()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(response -> {
@@ -66,7 +72,8 @@ public class NewsPresenterImp implements NewsPresenter {
                             newsView.changeProgressVisibility(false);
                             newsView.showMessage(R.string.network_error);
                         }
-                );
+                )
+        );
     }
 
     @Override

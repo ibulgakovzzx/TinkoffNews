@@ -65,6 +65,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
 
     @Override
     public void changeProgressVisibility(boolean isVisible) {
+        swLayout.setRefreshing(isVisible);
         pbLoad.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 

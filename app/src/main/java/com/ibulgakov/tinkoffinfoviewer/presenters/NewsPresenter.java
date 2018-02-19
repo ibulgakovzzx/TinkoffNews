@@ -3,6 +3,8 @@ package com.ibulgakov.tinkoffinfoviewer.presenters;
 import com.ibulgakov.tinkoffinfoviewer.models.eniity.News;
 import com.ibulgakov.tinkoffinfoviewer.views.NewsView;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 /**
  * Created by ibulgakov on 23.01.18.
  */
